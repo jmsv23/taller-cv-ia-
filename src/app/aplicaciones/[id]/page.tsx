@@ -6,7 +6,9 @@ import { Aviso } from "@/components/Aviso";
 import { BotonEnviar } from "@/components/BotonEnviar";
 import { Semaforo } from "@/components/Semaforo";
 import { ESTADOS, LISTA_ESTADOS, MODALIDADES } from "@/lib/ofertas";
-import { borrarAplicacion, cambiarEstado, guardarNotas } from "../actions";
+import { borrarAplicacion, cambiarEstado, comparar, guardarNotas } from "../actions";
+import { perfilActual, ultimaComparacion } from "@/db/consultas";
+import { VistaComparacion } from "@/components/VistaComparacion";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +24,8 @@ export default async function PaginaAplicacion({
   const [app] = await db.select().from(aplicaciones).where(eq(aplicaciones.id, id));
   if (!app) notFound();
   const o = app.oferta;
+  const perfil = await perfilActual();
+  const comparacion = await ultimaComparacion(app.id);
 
   return (
     <main className="mx-auto w-full max-w-3xl space-y-8 p-8">
@@ -83,9 +87,28 @@ export default async function PaginaAplicacion({
         </details>
       </section>
 
+      {/* Comparación */}
+      <section className="space-y-3 rounded border border-neutral-200 p-5">
+        <h2 className="text-xl font-semibold">¿Qué tanto encajo?</h2>
+        {!perfil ? (
+          <p className="text-neutral-500">Carga tu perfil primero para poder comparar.</p>
+        ) : (
+          <>
+            {comparacion && (
+              <VistaComparacion r={comparacion.resultado} perfilDesactualizado={comparacion.perfilId !== perfil.id} />
+            )}
+            <form action={comparar.bind(null, app.id)}>
+              <BotonEnviar variante={comparacion ? "secundario" : "principal"} pendiente="Comparando requisito por requisito…">
+                {comparacion ? "Volver a comparar" : "Comparar con mi perfil"}
+              </BotonEnviar>
+            </form>
+          </>
+        )}
+      </section>
+
       <section className="rounded border border-dashed border-neutral-300 p-5 text-neutral-500">
-        <h2 className="text-xl font-semibold">Siguiente: H3 · Comparación con tu perfil</h2>
-        <p>¿Qué cumples, qué te falta y qué deberías estudiar para este puesto?</p>
+        <h2 className="text-xl font-semibold">Siguiente: H4 · CV a la medida</h2>
+        <p>Un CV pensado para esta oferta, sin inventar nada y legible para un ATS.</p>
       </section>
 
       {/* Notas */}

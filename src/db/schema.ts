@@ -1,6 +1,7 @@
 import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 import type { Perfil, Revision } from "@/lib/perfil";
 import type { Estado, Oferta } from "@/lib/ofertas";
+import type { ResultadoComparacion } from "@/lib/comparacion";
 
 // Aquí van las tablas de tu app.
 //
@@ -50,6 +51,21 @@ export const aplicaciones = sqliteTable("aplicaciones", {
     .notNull()
     .$defaultFn(() => new Date()),
   actualizadoEn: integer("actualizado_en", { mode: "timestamp" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+});
+
+// ── H3 · Comparación perfil vs. oferta ──────────────────────
+// Puede haber varias comparaciones por aplicación (si mejoras tu perfil y vuelves a comparar).
+export const comparaciones = sqliteTable("comparaciones", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  aplicacionId: integer("aplicacion_id")
+    .notNull()
+    .references(() => aplicaciones.id, { onDelete: "cascade" }),
+  perfilId: integer("perfil_id").notNull(), // con qué versión del perfil se comparó
+  porcentaje: integer("porcentaje").notNull(),
+  resultado: text("resultado", { mode: "json" }).$type<ResultadoComparacion>().notNull(),
+  creadoEn: integer("creado_en", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),
 });

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { desc } from "drizzle-orm";
 import { db } from "@/db";
-import { aplicaciones } from "@/db/schema";
+import { aplicaciones, comparaciones } from "@/db/schema";
 import { perfilActual } from "@/db/consultas";
 import { Semaforo } from "@/components/Semaforo";
 import { ESTADOS, LISTA_ESTADOS } from "@/lib/ofertas";
@@ -12,6 +12,11 @@ export default async function Inicio() {
   const perfil = await perfilActual();
   const lista = await db.select().from(aplicaciones).orderBy(desc(aplicaciones.actualizadoEn));
   const conteo = (e: string) => lista.filter((a) => a.estado === e).length;
+
+  // El porcentaje más reciente de cada aplicación.
+  const porcentajes = new Map<number, number>();
+  for (const c of await db.select().from(comparaciones).orderBy(comparaciones.id))
+    porcentajes.set(c.aplicacionId, c.porcentaje);
 
   return (
     <main className="mx-auto w-full max-w-3xl space-y-8 p-8">
@@ -63,7 +68,12 @@ export default async function Inicio() {
                     {a.empresa} · registrada el {a.creadoEn.toLocaleDateString("es-MX")}
                   </p>
                 </div>
-                <Semaforo estado={a.estado} conTexto={false} />
+                <div className="flex items-center gap-4">
+                  {porcentajes.has(a.id) && (
+                    <span className="text-sm text-neutral-600">{porcentajes.get(a.id)}% compatible</span>
+                  )}
+                  <Semaforo estado={a.estado} conTexto={false} />
+                </div>
               </Link>
             </li>
           ))}

@@ -22,8 +22,8 @@ export function apareceEn(texto: string, frase: string): boolean {
 export function citaVerificable(texto: string, cita: string): boolean {
   const palabras = normalizar(cita)
     .split(" ")
-    .filter((p) => p.length > 3);
-  if (palabras.length === 0) return false;
+    .filter((p) => p.length >= 3);
+  if (palabras.length === 0) return apareceEn(texto, cita);
   const base = normalizar(texto);
   const encontradas = palabras.filter((p) => base.includes(p)).length;
   return encontradas / palabras.length >= 0.6;

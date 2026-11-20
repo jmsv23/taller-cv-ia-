@@ -4,7 +4,9 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { aplicaciones } from "@/db/schema";
+import { aplicaciones, comparaciones } from "@/db/schema";
+import { perfilActual } from "@/db/consultas";
+import { compararPerfilConOferta } from "@/lib/comparacion";
 import { mensajeDeError } from "@/lib/errores";
 import { analizarOferta, LISTA_ESTADOS, type Estado } from "@/lib/ofertas";
 
@@ -50,4 +52,28 @@ export async function borrarAplicacion(id: number) {
   await db.delete(aplicaciones).where(eq(aplicaciones.id, id));
   revalidatePath("/");
   redirect("/");
+}
+
+export async function comparar(id: number) {
+  let error = "";
+  try {
+    const perfil = await perfilActual();
+    const [app] = await db.select().from(aplicaciones).where(eq(aplicaciones.id, id));
+    if (!perfil) error = "Primero carga tu perfil.";
+    else if (!app) error = "No encontré esa aplicación.";
+    else {
+      const resultado = await compararPerfilConOferta(perfil.datos, app.oferta);
+      await db.insert(comparaciones).values({
+        aplicacionId: id,
+        perfilId: perfil.id,
+        porcentaje: resultado.porcentaje,
+        resultado,
+      });
+    }
+  } catch (e) {
+    error = mensajeDeError(e);
+  }
+  revalidatePath(`/aplicaciones/${id}`);
+  revalidatePath("/");
+  if (error) redirect(`/aplicaciones/${id}?error=${encodeURIComponent(error)}`);
 }
