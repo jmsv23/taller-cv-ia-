@@ -174,11 +174,11 @@ Debe aparecer un número de versión.
 1. Entra a **https://opencode.ai/zen** e inicia sesión.
 2. Crea una **API key** y cópiala.
 
-### 5.3 (Opcional) OpenCode Go: 5 USD
+### 5.3 (Opcional) OpenCode Go: 10 USD
 
 Las cuentas gratis tienen un límite de uso al día. Para el taller **alcanzan**, pero si te quedas sin peticiones a la mitad, es frustrante.
 
-Si puedes, **te recomiendo la suscripción OpenCode Go (5 USD)** en **https://opencode.ai/go**. Le da a opencode acceso a buenos modelos abiertos con límites mucho más holgados. Mejora bastante la experiencia, pero **no es obligatoria**.
+Si puedes, **te recomiendo la suscripción OpenCode Go (10 USD)** en **https://opencode.ai/go**. Le da a opencode acceso a buenos modelos abiertos con límites mucho más holgados. Mejora bastante la experiencia, pero **no es obligatoria**.
 
 ---
 

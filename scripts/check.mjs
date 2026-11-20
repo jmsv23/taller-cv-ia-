@@ -181,7 +181,7 @@ if (!key.startsWith("sk-or-")) {
     if (datos.is_free_tier) {
       aviso(
         "Tu cuenta es gratis: tienes un límite de peticiones al día.",
-        "Es suficiente para la app. Si puedes, OpenCode Go (5 USD) mejora mucho la experiencia con opencode.",
+        "Es suficiente para la app. Si puedes, OpenCode Go (10 USD) mejora mucho la experiencia con opencode.",
       );
     }
 
