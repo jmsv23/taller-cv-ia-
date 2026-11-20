@@ -24,5 +24,5 @@ export async function preguntarALaIA(formData: FormData) {
   });
 
   await db.insert(pruebas).values({ pregunta, respuesta: output.respuesta });
-  revalidatePath("/");
+  revalidatePath("/prueba");
 }
