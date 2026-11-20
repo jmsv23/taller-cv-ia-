@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Taller CV con IA",
+  title: "Conecta y automatiza: construye un flujo de trabajo con IA",
   description: "Rastreador de ofertas y CVs a la medida, construido con IA",
 };
 

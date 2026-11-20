@@ -22,7 +22,7 @@ export default async function Inicio() {
   return (
     <main className="mx-auto w-full max-w-2xl p-8 space-y-10">
       <header className="space-y-2">
-        <h1 className="text-3xl font-bold">Taller: tu buscador de empleo con IA</h1>
+        <h1 className="text-3xl font-bold">Conecta y automatiza: construye un flujo de trabajo con IA</h1>
         <p className="text-neutral-600">
           Si ves esta página, tu proyecto ya funciona. Lo que sigue lo construyes tú con opencode.
         </p>

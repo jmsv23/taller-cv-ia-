@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# Proyecto del taller: buscador de empleo con IA
+# Proyecto del taller «Conecta y automatiza: construye un flujo de trabajo con IA»: rastreador de ofertas y CVs con IA
 
 Estás ayudando a estudiantes de **primer semestre** en un taller. Muchos nunca han programado.
 

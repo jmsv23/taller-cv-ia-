@@ -1,4 +1,4 @@
-# Taller: tu buscador de empleo con IA
+# Conecta y automatiza: construye un flujo de trabajo con IA
 
 ¡Hola! En el taller vamos a construir, con ayuda de la IA, una app que:
 
