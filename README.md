@@ -11,6 +11,8 @@ Para no perder tiempo el día del taller, **necesito que hagas esta tarea previa
 
 > 💡 Si nunca has usado una terminal, no pasa nada. Aquí vas a aprender lo justo.
 
+> 📘 **El día del taller** vamos a seguir la guía [HITOS.md](HITOS.md). Esta página (README) es solo la tarea previa.
+
 ---
 
 ## ¿Qué vamos a instalar?
