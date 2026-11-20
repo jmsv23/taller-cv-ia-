@@ -185,7 +185,7 @@ En el taller usamos modelos **gratis**: su nombre termina en `:free` (por ejempl
 - **Si llegas al límite**, vas a ver un error **429**. No se rompió nada: espera un minuto (si fue el límite por minuto) o al día siguiente (si fue el límite por día).
 - **Si compras 10 USD de créditos una vez**, el límite sube a 1,000 al día *para siempre*, y esos créditos **no se gastan** mientras uses solo modelos `:free`. Es opcional.
 
-> ⚠️ **No uses tu cuenta de OpenRouter dentro de opencode con modelos gratis.** opencode hace muchas peticiones por cada cosa que le pides y se acabaría tus 50 del día en minutos. Para opencode usa **OpenCode Zen** (abajo) u **OpenCode Go**. OpenRouter queda solo para la app.
+> ⚠️ **No uses tu cuenta de OpenRouter dentro de opencode con modelos gratis.** opencode hace muchas peticiones por cada cosa que le pides y te acabaría tus 50 peticiones del día en minutos. Para opencode usa **OpenCode Zen** (abajo) u **OpenCode Go**. OpenRouter queda solo para la app.
 
 ### 5.2 OpenCode Zen (para opencode)
 
