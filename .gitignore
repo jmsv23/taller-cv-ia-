@@ -43,4 +43,6 @@ next-env.d.ts
 # base de datos local del taller
 local.db
 local.db-*
+*.db
+*.db-*
 !.env.example
