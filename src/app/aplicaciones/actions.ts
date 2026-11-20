@@ -9,15 +9,25 @@ import { perfilActual, ultimaComparacion } from "@/db/consultas";
 import { generarCv } from "@/lib/cv";
 import { compararPerfilConOferta } from "@/lib/comparacion";
 import { mensajeDeError } from "@/lib/errores";
-import { analizarOferta, LISTA_ESTADOS, type Estado } from "@/lib/ofertas";
+import { analizarOferta, LISTA_ESTADOS, textoDeUrl, type Estado } from "@/lib/ofertas";
 
 export async function registrarOferta(formData: FormData) {
-  const texto = String(formData.get("texto") ?? "").trim();
+  let texto = String(formData.get("texto") ?? "").trim();
   const url = String(formData.get("url") ?? "").trim() || null;
 
   let error = "";
   let id = 0;
   try {
+    // Reto extra: si no pegaron texto pero sí hay link, intentamos leer la página.
+    if (!texto && url) {
+      try {
+        texto = await textoDeUrl(url);
+      } catch (e) {
+        throw new Error(
+          `No pude leer esa página (${e instanceof Error ? e.message : "error"}). Muchas bolsas de trabajo bloquean a los programas: copia y pega el texto.`,
+        );
+      }
+    }
     if (texto.length < 80) error = "Pega el texto completo de la oferta (descripción, requisitos, sueldo…).";
     else {
       const oferta = await analizarOferta(texto);

@@ -18,10 +18,10 @@ export default async function NuevaOferta({ searchParams }: { searchParams: Prom
       <form action={registrarOferta} className="space-y-4 rounded border border-neutral-200 p-5">
         <label className="grid gap-1 text-sm">
           Texto de la oferta
-          <textarea name="texto" rows={14} required className="rounded border border-neutral-300 p-2" />
+          <textarea name="texto" rows={14} className="rounded border border-neutral-300 p-2" />
         </label>
         <label className="grid gap-1 text-sm">
-          Link de la oferta (opcional, para que no lo pierdas)
+          Link de la oferta (si no pegas el texto, intento leerlo del link)
           <input name="url" type="url" placeholder="https://…" className="rounded border border-neutral-300 px-2 py-1" />
         </label>
         <p className="text-xs text-neutral-500">¿No tienes una a la mano? Usa las de la carpeta ejemplos/ofertas.</p>

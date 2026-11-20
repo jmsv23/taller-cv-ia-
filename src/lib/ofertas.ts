@@ -52,3 +52,28 @@ export const MODALIDADES = {
   remoto: "Remoto",
   no_especificada: "Modalidad no especificada",
 } as const;
+
+// ── Reto extra: leer la oferta desde un link ────────────────
+// Descargamos la página y le quitamos el HTML. Muchas bolsas de trabajo
+// (LinkedIn, por ejemplo) bloquean esto o cargan la oferta con JavaScript:
+// por eso pegar el texto sigue siendo el camino principal.
+export async function textoDeUrl(url: string): Promise<string> {
+  const respuesta = await fetch(url, {
+    headers: { "User-Agent": "Mozilla/5.0 (rastreador de CVs del taller)" },
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!respuesta.ok) throw new Error(`La página respondió con error ${respuesta.status}.`);
+  const html = await respuesta.text();
+  return html
+    .replace(/<(script|style|noscript|svg|nav|footer|header)[\s\S]*?<\/\1>/gi, " ")
+    .replace(/<br\s*\/?>|<\/(p|div|li|h[1-6])>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n\s*\n+/g, "\n")
+    .trim()
+    .slice(0, 15_000); // los modelos gratis tienen un límite de texto
+}
