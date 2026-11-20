@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // La base de datos (libsql) se queda fuera del bundle para que funcione igual en Windows, Mac y Linux.
+  serverExternalPackages: ["@libsql/client"],
   turbopack: {
     rules: {
       "*.css": {

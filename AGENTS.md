@@ -7,3 +7,31 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+# Proyecto del taller: buscador de empleo con IA
+
+Estás ayudando a estudiantes de **primer semestre** en un taller. Muchos nunca han programado.
+
+## Cómo trabajar
+- Responde y explica **en español**, con palabras sencillas.
+- Haz cambios **pequeños** y explica qué cambiaste y por qué antes de seguir.
+- Antes de escribir código para algo nuevo, propón primero el diseño (qué datos, qué pantallas) y espera confirmación.
+- No instales dependencias nuevas sin preguntar. Lo necesario ya está instalado.
+- Todo debe funcionar igual en **Windows, Mac y Linux**: nada de comandos de bash o PowerShell en `package.json`, y usa `path.join` para las rutas.
+
+## Stack
+- **Next.js** (App Router) en `src/app`. Usa Server Components y Server Actions (`"use server"`), como en `src/app/actions.ts`.
+- **Base de datos**: SQLite local en el archivo `local.db`, con **Drizzle ORM** + `@libsql/client`.
+  - Las tablas se definen en `src/db/schema.ts`; la conexión está en `src/db/index.ts` (`import { db } from "@/db"`).
+  - Después de cambiar el esquema hay que correr `npm run db:push`.
+- **IA**: AI SDK (`ai`) con OpenRouter. El modelo está en `src/lib/ai.ts` (`import { modelo } from "@/lib/ai"`).
+  - Para datos estructurados usa `generateText` con `output: Output.object({ schema })` y un esquema de **Zod**. Mira `src/app/actions.ts`.
+  - ⚠️ En esta versión del AI SDK **`generateObject` ya no existe**. No lo uses.
+  - Los modelos son gratis y modestos: prompts claros, esquemas simples y con `.describe()` en cada campo.
+- **Leer PDFs**: `unpdf` (`import { extractText, getDocumentProxy } from "unpdf"`), siempre en el servidor.
+- **Estilos**: Tailwind CSS, sin librerías de componentes. La interfaz va en español.
+
+## Comandos
+- `npm run dev`: levanta la app en http://localhost:3000
+- `npm run db:push`: aplica los cambios de `src/db/schema.ts` a la base de datos.
+- `npm run check`: verifica que la computadora esté lista.
