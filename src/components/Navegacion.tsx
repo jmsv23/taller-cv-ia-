@@ -1,8 +1,9 @@
 import Link from "next/link";
 
 const enlaces = [
-  { href: "/", texto: "Inicio" },
+  { href: "/", texto: "Aplicaciones" },
   { href: "/perfil", texto: "Mi perfil" },
+  { href: "/ofertas/nueva", texto: "Nueva oferta" },
   { href: "/prueba", texto: "Prueba de IA" },
 ];
 

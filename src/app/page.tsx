@@ -1,41 +1,74 @@
 import Link from "next/link";
+import { desc } from "drizzle-orm";
+import { db } from "@/db";
+import { aplicaciones } from "@/db/schema";
 import { perfilActual } from "@/db/consultas";
+import { Semaforo } from "@/components/Semaforo";
+import { ESTADOS, LISTA_ESTADOS } from "@/lib/ofertas";
 
 export const dynamic = "force-dynamic";
 
 export default async function Inicio() {
   const perfil = await perfilActual();
+  const lista = await db.select().from(aplicaciones).orderBy(desc(aplicaciones.actualizadoEn));
+  const conteo = (e: string) => lista.filter((a) => a.estado === e).length;
 
   return (
     <main className="mx-auto w-full max-w-3xl space-y-8 p-8">
       <header className="space-y-2">
-        <h1 className="text-3xl font-bold">Conecta y automatiza: construye un flujo de trabajo con IA</h1>
-        <p className="text-neutral-600">Tu rastreador de ofertas de trabajo y CVs a la medida.</p>
+        <h1 className="text-3xl font-bold">Mis aplicaciones</h1>
+        <p className="text-neutral-600">
+          {perfil ? (
+            <>
+              Perfil de <strong>{perfil.datos.nombre}</strong> ·{" "}
+              <Link href="/perfil" className="underline">
+                ver perfil
+              </Link>
+            </>
+          ) : (
+            <>
+              Todavía no tienes perfil.{" "}
+              <Link href="/perfil" className="underline">
+                Cárgalo desde tu CV
+              </Link>{" "}
+              para poder comparar ofertas.
+            </>
+          )}
+        </p>
       </header>
 
-      <section className="rounded border border-neutral-200 p-5">
-        <h2 className="text-xl font-semibold">1. Tu perfil</h2>
-        {perfil ? (
-          <p>
-            ✅ Listo: <strong>{perfil.datos.nombre}</strong>.{" "}
-            <Link href="/perfil" className="underline">
-              Verlo o mejorarlo
-            </Link>
-          </p>
-        ) : (
-          <p>
-            Todavía no tienes perfil.{" "}
-            <Link href="/perfil" className="underline">
-              Cárgalo desde tu CV
-            </Link>
-          </p>
-        )}
-      </section>
+      <div className="flex flex-wrap gap-4 text-sm">
+        {LISTA_ESTADOS.map((e) => (
+          <span key={e} className="flex items-center gap-2">
+            <span className={`inline-block h-3 w-3 rounded-full ${ESTADOS[e].color}`} />
+            {conteo(e)} {ESTADOS[e].etiqueta.toLowerCase()}
+          </span>
+        ))}
+      </div>
 
-      <section className="rounded border border-dashed border-neutral-300 p-5 text-neutral-500">
-        <h2 className="text-xl font-semibold">Siguiente: H2 · Ofertas y aplicaciones</h2>
-        <p>Pega una oferta de trabajo y regístrala como aplicación con su semáforo.</p>
-      </section>
+      <Link href="/ofertas/nueva" className="inline-block rounded bg-black px-4 py-2 text-sm font-medium text-white">
+        + Registrar una oferta
+      </Link>
+
+      {lista.length === 0 ? (
+        <p className="text-neutral-500">Aún no registras ninguna oferta.</p>
+      ) : (
+        <ul className="divide-y divide-neutral-200 rounded border border-neutral-200">
+          {lista.map((a) => (
+            <li key={a.id}>
+              <Link href={`/aplicaciones/${a.id}`} className="flex items-center justify-between gap-4 p-4 hover:bg-neutral-50">
+                <div>
+                  <p className="font-medium">{a.puesto}</p>
+                  <p className="text-sm text-neutral-500">
+                    {a.empresa} · registrada el {a.creadoEn.toLocaleDateString("es-MX")}
+                  </p>
+                </div>
+                <Semaforo estado={a.estado} conTexto={false} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 }
