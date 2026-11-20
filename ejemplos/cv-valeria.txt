@@ -1,0 +1,32 @@
+VALERIA RAMÍREZ ORTEGA
+Estudiante de Ingeniería en Sistemas Computacionales
+valeria.ramirez.ejemplo@correo.com | 55 1234 5678 | Huixquilucan, Estado de México
+linkedin.com/in/valeria-ejemplo
+
+SOBRE MÍ
+Soy estudiante de segundo semestre, me gusta la tecnología y aprender cosas nuevas. Soy responsable, trabajo bien en equipo y tengo muchas ganas de aprender.
+
+EDUCACIÓN
+Ingeniería en Sistemas Computacionales — Universidad Anáhuac México (2026 - actual)
+Bachillerato Tecnológico en Programación — CBTIS 999 (2023 - 2026). Promedio 9.2
+
+EXPERIENCIA
+Cajera y atención a clientes — Cafetería La Esquina (vacaciones 2025)
+- Atendía clientes
+- Manejaba la caja
+- Hice un Excel para el inventario
+
+Voluntaria — Banco de Alimentos de mi colonia (2024)
+- Ayudé a organizar donaciones
+- Hice publicaciones en Instagram
+
+PROYECTOS
+Página web de la cafetería: hice una página con HTML, CSS y un poco de JavaScript con el menú y el horario. La usaron unos meses.
+Bot de Discord para mi salón: un bot en Python que recordaba las fechas de entrega de tareas.
+Proyecto final del bachillerato: app para registrar asistencia con Python y SQLite, en equipo de 4.
+
+HABILIDADES
+Python, HTML, CSS, JavaScript (básico), Excel, SQL (básico), Canva, Git (lo estoy aprendiendo)
+
+IDIOMAS
+Español nativo, Inglés intermedio (B1)

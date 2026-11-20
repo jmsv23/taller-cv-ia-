@@ -1,0 +1,27 @@
+Becario(a) de Desarrollo Web — NubeMX Software (empresa ficticia)
+Ubicación: Ciudad de México (híbrido, 2 días en oficina)
+Apoyo económico: $9,000 MXN mensuales
+Horario: 6 horas diarias, compatible con la escuela
+
+¿Quiénes somos?
+Somos una startup mexicana que hace software de reservaciones para restaurantes. Somos un equipo de 25 personas y nos encanta enseñar.
+
+¿Qué harás?
+- Apoyar al equipo a construir pantallas nuevas de nuestra aplicación web.
+- Corregir errores pequeños y escribir pruebas.
+- Participar en las juntas diarias del equipo.
+- Documentar lo que aprendes.
+
+Requisitos
+- Estudiante de Ingeniería en Sistemas, Computación o afín (desde 1er semestre).
+- Conocimientos de HTML, CSS y JavaScript.
+- Saber usar Git a nivel básico.
+- Inglés intermedio para leer documentación.
+- Disponibilidad de 6 horas al día.
+
+Deseable
+- Experiencia con React o Next.js.
+- Conocimientos de SQL.
+- Haber hecho algún proyecto personal publicado.
+
+Ofrecemos: mentoría, horario flexible, posibilidad de contratación al terminar la beca.
