@@ -169,6 +169,24 @@ Debe aparecer un número de versión.
 
 > 🔒 Tu key es como una contraseña: no la compartas ni la subas a internet.
 
+#### ¿Cómo funcionan los modelos gratis de OpenRouter?
+
+En el taller usamos modelos **gratis**: su nombre termina en `:free` (por ejemplo `nvidia/nemotron-3.5-super-vl:free`). No te cobran nada por usarlos, pero tienen **límites de uso**:
+
+| Tu cuenta | Peticiones por minuto | Peticiones por día | Costo |
+|---|---|---|---|
+| Sin créditos (o menos de 10 USD comprados en total) | 20 | **50** | 0 USD |
+| Con al menos 10 USD comprados alguna vez | 20 | **1,000** | 0 USD |
+
+¿Qué significa esto en la práctica?
+
+- **Una petición es una pregunta a la IA.** Cada vez que la app lee un CV, analiza una oferta o genera un CV, gasta una petición (a veces más).
+- **Con la cuenta gratis tienes 50 al día.** Alcanza para el taller si no le picas al botón de más.
+- **Si llegas al límite**, vas a ver un error **429**. No se rompió nada: espera un minuto (si fue el límite por minuto) o al día siguiente (si fue el límite por día).
+- **Si compras 10 USD de créditos una vez**, el límite sube a 1,000 al día *para siempre*, y esos créditos **no se gastan** mientras uses solo modelos `:free`. Es opcional.
+
+> ⚠️ **No uses tu cuenta de OpenRouter dentro de opencode con modelos gratis.** opencode hace muchas peticiones por cada cosa que le pides y se acabaría tus 50 del día en minutos. Para opencode usa **OpenCode Zen** (abajo) u **OpenCode Go**. OpenRouter queda solo para la app.
+
 ### 5.2 OpenCode Zen (para opencode)
 
 1. Entra a **https://opencode.ai/zen** e inicia sesión.
@@ -190,8 +208,9 @@ opencode auth login
 
 1. Te va a aparecer una lista. Busca **OpenCode Zen** (puedes escribir para filtrar), selecciónalo con las flechas y presiona Enter.
 2. Pega tu key de OpenCode Zen y presiona Enter.
-3. Corre **otra vez** `opencode auth login` y ahora elige **OpenRouter**. Pega tu key de OpenRouter.
-4. Si contrataste **OpenCode Go**, corre una vez más `opencode auth login` y conéctalo también.
+3. Si contrataste **OpenCode Go**, corre otra vez `opencode auth login` y conéctalo también.
+
+> No conectes OpenRouter aquí: tu key de OpenRouter es solo para la app (la pide `npm run check` en el paso 8).
 
 ---
 
@@ -241,7 +260,7 @@ Dentro de la carpeta del proyecto (`taller-cv-ia-`), escribe:
 opencode
 ```
 
-1. Escribe `/models` y presiona Enter. Elige un modelo que diga **Free** (o uno de OpenCode Go, si lo contrataste).
+1. Escribe `/models` y presiona Enter. Elige un modelo **gratis de OpenCode Zen** (o uno de OpenCode Go, si lo contrataste).
 2. Escríbele: **explícame qué hay en este proyecto**.
 3. Si te contesta, ¡ya está! Sal con **Ctrl + C**.
 

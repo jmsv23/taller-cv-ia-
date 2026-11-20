@@ -130,7 +130,7 @@ if (!oc.ok) {
   else
     falla(
       "opencode no tiene ningún proveedor de modelos conectado.",
-      "Corre:  opencode auth login   y conecta OpenCode Zen y OpenRouter (paso 5 de la guía).",
+      "Corre:  opencode auth login   y conecta OpenCode Zen (paso 6 de la guía).",
     );
 }
 
