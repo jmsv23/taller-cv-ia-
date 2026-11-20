@@ -15,3 +15,17 @@ body {
   color: var(--foreground);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
+
+/* CV compatible con ATS: encabezados simples y nada de columnas, tablas ni íconos. */
+.cv h2 {
+  font-size: 12pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid #000;
+  margin-bottom: 4px;
+}
+
+@page {
+  size: letter;
+  margin: 1.5cm;
+}

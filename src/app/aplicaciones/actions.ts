@@ -4,8 +4,9 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { aplicaciones, comparaciones } from "@/db/schema";
-import { perfilActual } from "@/db/consultas";
+import { aplicaciones, comparaciones, cvs } from "@/db/schema";
+import { perfilActual, ultimaComparacion } from "@/db/consultas";
+import { generarCv } from "@/lib/cv";
 import { compararPerfilConOferta } from "@/lib/comparacion";
 import { mensajeDeError } from "@/lib/errores";
 import { analizarOferta, LISTA_ESTADOS, type Estado } from "@/lib/ofertas";
@@ -76,4 +77,34 @@ export async function comparar(id: number) {
   revalidatePath(`/aplicaciones/${id}`);
   revalidatePath("/");
   if (error) redirect(`/aplicaciones/${id}?error=${encodeURIComponent(error)}`);
+}
+
+export async function crearCv(id: number) {
+  let error = "";
+  let cvId = 0;
+  try {
+    const perfil = await perfilActual();
+    const [app] = await db.select().from(aplicaciones).where(eq(aplicaciones.id, id));
+    if (!perfil) error = "Primero carga tu perfil.";
+    else if (!app) error = "No encontré esa aplicación.";
+    else {
+      const comparacion = await ultimaComparacion(id);
+      const resultado = await generarCv(perfil.datos, app.oferta, comparacion?.resultado ?? null);
+      const [nuevo] = await db.insert(cvs).values({ aplicacionId: id, resultado }).returning({ id: cvs.id });
+      cvId = nuevo.id;
+    }
+  } catch (e) {
+    error = mensajeDeError(e);
+  }
+  revalidatePath(`/aplicaciones/${id}`);
+  if (error) redirect(`/aplicaciones/${id}?error=${encodeURIComponent(error)}`);
+  redirect(`/cv/${cvId}`);
+}
+
+// Marca cuál CV fue el que realmente mandaste (solo puede haber uno por aplicación).
+export async function marcarEnviado(aplicacionId: number, cvId: number) {
+  await db.update(cvs).set({ enviado: false }).where(eq(cvs.aplicacionId, aplicacionId));
+  await db.update(cvs).set({ enviado: true }).where(eq(cvs.id, cvId));
+  revalidatePath(`/aplicaciones/${aplicacionId}`);
+  revalidatePath(`/cv/${cvId}`);
 }

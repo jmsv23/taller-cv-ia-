@@ -18,6 +18,8 @@ export function mensajeDeError(e: unknown): string {
     return "La IA respondió, pero no con el formato que le pedimos. Vuelve a intentar (a veces a la segunda sale).";
 
   if (e instanceof Error) {
+    if (/api key is missing/i.test(e.message))
+      return "Falta tu key de OpenRouter en .env.local. Corre  npm run check  y después reinicia  npm run dev.";
     if (/fetch failed|ENOTFOUND|ECONNRESET/i.test(e.message))
       return "No hay conexión con internet o con OpenRouter. Revisa tu red.";
     return e.message;

@@ -2,6 +2,7 @@ import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 import type { Perfil, Revision } from "@/lib/perfil";
 import type { Estado, Oferta } from "@/lib/ofertas";
 import type { ResultadoComparacion } from "@/lib/comparacion";
+import type { ResultadoCv } from "@/lib/cv";
 
 // Aquí van las tablas de tu app.
 //
@@ -65,6 +66,20 @@ export const comparaciones = sqliteTable("comparaciones", {
   perfilId: integer("perfil_id").notNull(), // con qué versión del perfil se comparó
   porcentaje: integer("porcentaje").notNull(),
   resultado: text("resultado", { mode: "json" }).$type<ResultadoComparacion>().notNull(),
+  creadoEn: integer("creado_en", { mode: "timestamp" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+});
+
+// ── H4 · CVs a la medida ────────────────────────────────────
+// Cada CV generado se guarda tal cual: así sabes exactamente qué versión mandaste.
+export const cvs = sqliteTable("cvs", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  aplicacionId: integer("aplicacion_id")
+    .notNull()
+    .references(() => aplicaciones.id, { onDelete: "cascade" }),
+  resultado: text("resultado", { mode: "json" }).$type<ResultadoCv>().notNull(),
+  enviado: integer("enviado", { mode: "boolean" }).notNull().default(false),
   creadoEn: integer("creado_en", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),

@@ -1,14 +1,15 @@
-import { eq } from "drizzle-orm";
+import Link from "next/link";
+import { desc, eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
-import { aplicaciones } from "@/db/schema";
+import { aplicaciones, cvs } from "@/db/schema";
+import { perfilActual, ultimaComparacion } from "@/db/consultas";
 import { Aviso } from "@/components/Aviso";
 import { BotonEnviar } from "@/components/BotonEnviar";
 import { Semaforo } from "@/components/Semaforo";
-import { ESTADOS, LISTA_ESTADOS, MODALIDADES } from "@/lib/ofertas";
-import { borrarAplicacion, cambiarEstado, comparar, guardarNotas } from "../actions";
-import { perfilActual, ultimaComparacion } from "@/db/consultas";
 import { VistaComparacion } from "@/components/VistaComparacion";
+import { ESTADOS, LISTA_ESTADOS, MODALIDADES } from "@/lib/ofertas";
+import { borrarAplicacion, cambiarEstado, comparar, crearCv, guardarNotas } from "../actions";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,7 @@ export default async function PaginaAplicacion({
   const o = app.oferta;
   const perfil = await perfilActual();
   const comparacion = await ultimaComparacion(app.id);
+  const listaCvs = await db.select().from(cvs).where(eq(cvs.aplicacionId, app.id)).orderBy(desc(cvs.id));
 
   return (
     <main className="mx-auto w-full max-w-3xl space-y-8 p-8">
@@ -106,9 +108,31 @@ export default async function PaginaAplicacion({
         )}
       </section>
 
-      <section className="rounded border border-dashed border-neutral-300 p-5 text-neutral-500">
-        <h2 className="text-xl font-semibold">Siguiente: H4 · CV a la medida</h2>
-        <p>Un CV pensado para esta oferta, sin inventar nada y legible para un ATS.</p>
+      {/* CVs a la medida */}
+      <section className="space-y-3 rounded border border-neutral-200 p-5">
+        <h2 className="text-xl font-semibold">CV a la medida</h2>
+        {listaCvs.length > 0 && (
+          <ul className="space-y-1 text-sm">
+            {listaCvs.map((c) => (
+              <li key={c.id}>
+                <Link href={`/cv/${c.id}`} className="underline">
+                  CV #{c.id} del {c.creadoEn.toLocaleString("es-MX")}
+                </Link>
+                {c.enviado && " · 📨 enviado"}
+                {c.resultado.alertas.length > 0 && ` · ⚠️ ${c.resultado.alertas.length} alerta(s)`}
+              </li>
+            ))}
+          </ul>
+        )}
+        {perfil ? (
+          <form action={crearCv.bind(null, app.id)}>
+            <BotonEnviar pendiente="Escribiendo tu CV… (puede tardar hasta un minuto)">
+              {listaCvs.length ? "Generar otra versión" : "Generar CV para esta oferta"}
+            </BotonEnviar>
+          </form>
+        ) : (
+          <p className="text-neutral-500">Carga tu perfil primero.</p>
+        )}
       </section>
 
       {/* Notas */}
