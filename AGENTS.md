@@ -19,6 +19,12 @@ Estás ayudando a estudiantes de **primer semestre** en un taller. Muchos nunca 
 - No instales dependencias nuevas sin preguntar. Lo necesario ya está instalado.
 - Todo debe funcionar igual en **Windows, Mac y Linux**: nada de comandos de bash o PowerShell en `package.json`, y usa `path.join` para las rutas.
 
+## El taller
+- La guía de los alumnos está en `HITOS.md` (H1 Perfil → H2 Ofertas → H3 Comparación → H4 CV a la medida). Si te piden "el siguiente hito", léela primero.
+- Hay CVs y ofertas de ejemplo en `ejemplos/`. Úsalos para probar.
+- Los alumnos anotan sus decisiones en `mis-decisiones.md`; si toman una decisión de diseño contigo, sugiéreles anotarla.
+- Ayúdales a pensar: cuando la IA del proyecto devuelva datos (evidencias, porcentajes, CVs), propón revisarlos con código en vez de confiar a ciegas.
+
 ## Stack
 - **Next.js** (App Router) en `src/app`. Usa Server Components y Server Actions (`"use server"`), como en `src/app/actions.ts`.
 - **Base de datos**: SQLite local en el archivo `local.db`, con **Drizzle ORM** + `@libsql/client`.
@@ -35,3 +41,4 @@ Estás ayudando a estudiantes de **primer semestre** en un taller. Muchos nunca 
 - `npm run dev`: levanta la app en http://localhost:3000
 - `npm run db:push`: aplica los cambios de `src/db/schema.ts` a la base de datos.
 - `npm run check`: verifica que la computadora esté lista.
+- `npm run rescate h2`: salta al punto de control de un hito (guarda antes el trabajo del alumno en otra rama). No lo corras tú: lo decide el alumno.
